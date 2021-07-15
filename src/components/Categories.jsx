@@ -1,12 +1,17 @@
 import React from 'react';
 
-const Categories = ({ items, onClick }) => {
+const Categories = ({ items, onSelectCategory, activeCategory }) => {
+  let activeCat = activeCategory || "Все";
   return (
     <div className="categories">
       <ul>
-        <li className="active">Все</li>
         {
-          items.map((name) => <li key={name} onClick={() => onClick(name)}>{name}</li>)
+          items.map((name) =>
+            <li
+              key={name}
+              onClick={() => onSelectCategory(name)}
+              className={activeCat === name ? "active" : ""}
+            >{name}</li>)
         }
       </ul>
     </div>

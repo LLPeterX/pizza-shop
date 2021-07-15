@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Header, Categories } from './components'
 
 function App() {
+  const [activeCategory, setActiveCategory] = useState("Все");
   return (
     <div className="wrapper">
       <Header />
@@ -10,8 +11,9 @@ function App() {
         <div className="container">
           <div className="content__top">
             <Categories
-              items={["Мясные", "Вегетарианские", "Гриль", "Острые", "Закрытые"]}
-              onClick={(data) => alert(data)}
+              items={["Все", "Мясные", "Вегетарианские", "Гриль", "Острые", "Закрытые"]}
+              onSelectCategory={(cat) => setActiveCategory(cat)}
+              activeCategory={activeCategory}
             />
             <div className="sort">
               <div className="sort__label">
