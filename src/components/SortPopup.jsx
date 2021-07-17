@@ -5,6 +5,8 @@ export default function SortPopup({ items }) {
   const [visiblePopup, setVisiblePopup] = useState(false);
   // actve sort item
   const [activeItem, setActiveItem] = useState(0);
+  // sort order: false - ascending, true - descending
+  const [sortOrder, setSortOrder] = useState(false);
 
   // ссылка на div меню сортировки
   const sortRef = useRef();
@@ -14,6 +16,11 @@ export default function SortPopup({ items }) {
     if (!e.path.includes(sortRef.current)) {
       setVisiblePopup(false);
     }
+  }
+  // клик на кнопку смены порядка сортировки
+  const handleSortOrder = (e) => {
+    setSortOrder(!sortOrder);
+    console.log('sort order click:', sortOrder);
   }
 
   useEffect(() => {
@@ -33,6 +40,8 @@ export default function SortPopup({ items }) {
     <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
+          className={sortOrder ? "rotated" : ""}
+          onClick={handleSortOrder}
           width="10"
           height="6"
           viewBox="0 0 10 6"
