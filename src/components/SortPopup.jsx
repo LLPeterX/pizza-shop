@@ -1,12 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 export default function SortPopup() {
   // show/hide menu flag
   const [visiblePopup, setVisiblePopup] = useState(false);
 
+  // ссылка на div меню сортировки
+  const sortRef = useRef();
+
   // обработчик клика на станице.
   const handleOutsideClick = (e) => {
-    console.log('CLICKED!', e.target);
+    if (!e.path.includes(sortRef.current)) {
+      setVisiblePopup(false);
+    }
   }
 
   useEffect(() => {
@@ -18,7 +23,7 @@ export default function SortPopup() {
   }
 
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"
