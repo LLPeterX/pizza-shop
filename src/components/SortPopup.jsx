@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-export default function SortPopup() {
+export default function SortPopup({ items }) {
   // show/hide menu flag
   const [visiblePopup, setVisiblePopup] = useState(false);
+  // actve sort item
+  const [activeItem, setActiveItem] = useState(0);
 
   // ссылка на div меню сортировки
   const sortRef = useRef();
@@ -22,6 +24,11 @@ export default function SortPopup() {
     setVisiblePopup(!visiblePopup);
   }
 
+  const onSelectItem = (index) => {
+    setActiveItem(index);
+    setVisiblePopup(false);
+  }
+
   return (
     <div className="sort" ref={sortRef}>
       <div className="sort__label">
@@ -38,14 +45,19 @@ export default function SortPopup() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={togglePopupVisible}>популярности</span>
+        <span onClick={togglePopupVisible}>{items[activeItem]}</span>
       </div>
       {visiblePopup &&
         <div className="sort__popup">
           <ul>
-            <li className="active">популярности</li>
-            <li>цене</li>
-            <li>алфавиту</li>
+            {
+              items && items.map((name, index) =>
+                <li
+                  key={name}
+                  onClick={() => onSelectItem(index)}
+                  className={activeItem === index ? "active" : ""}
+                >{name}</li>)
+            }
           </ul>
         </div>
       }
