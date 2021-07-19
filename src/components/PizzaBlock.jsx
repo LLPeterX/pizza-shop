@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames';
 
 export default function PizzaBlock({ imageUrl, name, types, sizes, price }) {
 
@@ -29,7 +30,11 @@ export default function PizzaBlock({ imageUrl, name, types, sizes, price }) {
         <ul>
           {types.map((type, index) => <li
             key={index}
-            className={index === currentType ? "active" : "inactive"}
+            // className={index === currentType ? "active" : "inactive"}
+            className={classNames({
+              'active': index === currentType, // класс 'active' будет применен только при заданном условии
+              'inactive': index !== currentType
+            })}
             onClick={() => onSelectType(index)}
           >{testo[type]}</li>)}
         </ul>

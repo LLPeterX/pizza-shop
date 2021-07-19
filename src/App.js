@@ -18,16 +18,8 @@ function App() {
   return (
     <div className="wrapper">
       <Header />
-      <div>
-        {pizzas.length}
-        <ul>
-          {
-            pizzas.map(p => <li key={p.id}>{p.name}</li>)
-          }
-        </ul>
-      </div>
       <div className="content">
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" render={() => <Home pizzas={pizzas} />} />
         <Route exact path="/cart" component={Cart} />
       </div>
     </div>
