@@ -1,8 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 export default function PizzaBlock({ imageUrl, name, types, sizes, price }) {
-
 
   const testo = ['тонкое', 'традиционное'];
   const [currentType, setCurrentType] = React.useState(0); // index of array testo
@@ -68,3 +68,12 @@ export default function PizzaBlock({ imageUrl, name, types, sizes, price }) {
     </div>
   )
 }
+
+PizzaBlock.propTypes = {
+  imageUrl: PropTypes.string,
+  name: PropTypes.string,
+  types: PropTypes.array,
+  sizes: PropTypes.array,
+  price: PropTypes.number,
+}
+
