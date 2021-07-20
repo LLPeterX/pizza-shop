@@ -2,6 +2,9 @@ import React from 'react'
 import { Categories, SortPopup, PizzaBlock } from '../components'
 
 export default function Home({ pizzas }) {
+
+  if (pizzas.length === 0) return null; // чтобы не перелавалось undefined в PizzaBlock
+
   return (
     <div className="container">
       <div className="content__top">
@@ -12,7 +15,6 @@ export default function Home({ pizzas }) {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {/* ниже через map() выводим наши пиццы. Пока только одна - для теста */}
         {pizzas && pizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)}
         <PizzaBlock />
       </div>
