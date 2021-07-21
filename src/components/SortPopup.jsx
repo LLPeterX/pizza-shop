@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react'
 export default function SortPopup({ items }) {
   // show/hide menu flag
   const [visiblePopup, setVisiblePopup] = useState(false);
-  // actve sort item
+  // actve sort item (array of objects)
   const [activeItem, setActiveItem] = useState(0);
   // sort order: false - ascending, true - descending
   const [sortOrder, setSortOrder] = useState(false);
@@ -20,7 +20,6 @@ export default function SortPopup({ items }) {
   // клик на кнопку смены порядка сортировки
   const handleSortOrder = (e) => {
     setSortOrder(!sortOrder);
-    console.log('sort order click:', sortOrder);
   }
 
   useEffect(() => {
@@ -54,18 +53,18 @@ export default function SortPopup({ items }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={togglePopupVisible}>{items[activeItem]}</span>
+        <span onClick={togglePopupVisible}>{items[activeItem].name}</span>
       </div>
       {visiblePopup &&
         <div className="sort__popup">
           <ul>
             {
-              items && items.map((name, index) =>
+              items && items.map((obj, index) =>
                 <li
-                  key={name}
+                  key={obj.type}
                   onClick={() => onSelectItem(index)}
                   className={activeItem === index ? "active" : ""}
-                >{name}</li>)
+                >{obj.name}</li>)
             }
           </ul>
         </div>
