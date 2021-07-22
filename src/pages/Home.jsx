@@ -1,7 +1,9 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 import { Categories, SortPopup, PizzaBlock } from '../components'
 
-export default function Home({ pizzas }) {
+export default function Home() {
+  const pizzas = useSelector(store => store.pizzas.items);
 
   if (pizzas.length === 0) return null; // чтобы не перелавалось undefined в PizzaBlock
 
@@ -19,7 +21,7 @@ export default function Home({ pizzas }) {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {pizzas && pizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)}
+        {pizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)}
         <PizzaBlock />
       </div>
     </div>
