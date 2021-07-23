@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-export default function SortPopup({ items }) {
+export default React.memo(function SortPopup({ items }) {
   // show/hide menu flag
   const [visiblePopup, setVisiblePopup] = useState(false);
   // actve sort item (array of objects)
@@ -71,4 +71,4 @@ export default function SortPopup({ items }) {
       }
     </div>
   )
-}
+});
