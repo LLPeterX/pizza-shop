@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories items={categoryNames} activeCategory={category} setActiveItem={onSelectCategory} />
+        <Categories items={categoryNames} activeCategory={category} onSelectCategory={onSelectCategory} />
         <SortPopup items={sortItems} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
