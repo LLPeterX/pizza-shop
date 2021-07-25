@@ -6,9 +6,11 @@ const initalState = {
 const pizzas = (state = initalState, action) => {
   switch (action.type) {
     case 'SET_PIZZAS':
-      return { ...state, items: action.payload };
+      return { ...state, items: action.payload, isLoaded: true };
     case 'SET_LOADED':
       return { ...state, isLoaded: true };
+    case 'SET_LOADING':
+      return { ...state, isLoaded: false };
     default:
       return state;
   }

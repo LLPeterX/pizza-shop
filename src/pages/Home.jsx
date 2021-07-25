@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Categories, SortPopup, PizzaBlock } from '../components'
 import { setCategory } from '../redux/actions/filters';
 import { fetchPizzas } from '../redux/actions/pizzas'
+import Loader from 'react-js-loader'
 
 // внешняя константа вне Home(), чтобы ссылка на неё осталась при перерендере Home
 const categoryNames = ["Мясные", "Вегетарианские", "Гриль", "Острые", "Закрытые"];
@@ -15,6 +16,7 @@ const sortItems = [
 export default function Home() {
 
   const pizzas = useSelector(store => store.pizzas.items);
+  const isLoaded = useSelector(store => store.pizzas.isLoaded);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -37,8 +39,10 @@ export default function Home() {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
-        {pizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)}
-        <PizzaBlock />
+        {isLoaded
+          ? pizzas.map(pizza => <PizzaBlock key={pizza.id} {...pizza} />)
+          : <Loader type="spinner-circle" color="#000000" bgColor="#FFFFFF" />
+        }
       </div>
     </div>
   );
