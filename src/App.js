@@ -1,19 +1,10 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react'
 import { Route } from 'react-router-dom'
 import { Header } from './components'
 import Cart from './pages/Cart';
 import Home from './pages/Home';
-import { fetchPizzas } from './redux/actions/pizzas'
 
 function App() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchPizzas());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <div className="wrapper">
       <Header />

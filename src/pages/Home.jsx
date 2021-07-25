@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Categories, SortPopup, PizzaBlock } from '../components'
 import { setCategory } from '../redux/actions/filters';
+import { fetchPizzas } from '../redux/actions/pizzas'
 
 // внешняя константа вне Home(), чтобы ссылка на неё осталась при перерендере Home
 const categoryNames = ["Мясные", "Вегетарианские", "Гриль", "Острые", "Закрытые"];
@@ -15,6 +16,13 @@ export default function Home() {
 
   const pizzas = useSelector(store => store.pizzas.items);
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    //if (pizzas.length === 0) {
+    dispatch(fetchPizzas());
+    //}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onSelectCategory = React.useCallback((cat) => {
     dispatch(setCategory(cat));
