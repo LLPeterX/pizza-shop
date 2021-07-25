@@ -8,9 +8,7 @@ const pizzas = (state = initalState, action) => {
     case 'SET_PIZZAS':
       return { ...state, items: action.payload, isLoaded: true };
     case 'SET_LOADED':
-      return { ...state, isLoaded: true };
-    case 'SET_LOADING':
-      return { ...state, isLoaded: false };
+      return { ...state, isLoaded: action.payload };
     default:
       return state;
   }

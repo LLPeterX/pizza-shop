@@ -7,5 +7,4 @@ export const fetchPizzas = () => (dispatch) => {
     });
 };
 export const setPizzas = (pizzas) => ({ type: 'SET_PIZZAS', payload: pizzas });
-export const setLoaded = () => ({ type: 'SET_LOADED' });
-export const setLoading = () => ({ type: 'SET_LOADING' });
+export const setLoaded = (val) => ({ type: 'SET_LOADED', payload: val });

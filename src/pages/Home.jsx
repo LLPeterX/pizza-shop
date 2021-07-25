@@ -17,6 +17,8 @@ export default function Home() {
 
   const pizzas = useSelector(store => store.pizzas.items);
   const isLoaded = useSelector(store => store.pizzas.isLoaded);
+  const { category, sortBy } = useSelector(store => store.filters);
+
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -24,7 +26,7 @@ export default function Home() {
     dispatch(fetchPizzas());
     //}
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [category, sortBy]);
 
   const onSelectCategory = React.useCallback((cat) => {
     dispatch(setCategory(cat));
