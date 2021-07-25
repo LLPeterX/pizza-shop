@@ -18,6 +18,7 @@ export default function Home() {
 
   const onSelectCategory = React.useCallback((cat) => {
     dispatch(setCategory(cat));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
