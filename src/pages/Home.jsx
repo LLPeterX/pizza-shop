@@ -8,9 +8,9 @@ import Loader from 'react-js-loader'
 // внешняя константа вне Home(), чтобы ссылка на неё осталась при перерендере Home
 const categoryNames = ["Мясные", "Вегетарианские", "Гриль", "Острые", "Закрытые"];
 const sortItems = [
-  { name: "популярности", type: 'popular' },
+  { name: "популярности", type: 'rating' },
   { name: "цене", type: 'price' },
-  { name: "алфавиту", type: 'alphabet' }
+  { name: "алфавиту", type: 'name' }
 ];
 
 export default function Home() {
@@ -39,7 +39,6 @@ export default function Home() {
   }, []);
 
   const onSelectSortOrder = React.useCallback(() => {
-    console.log(' Home: call onSelectSortOrder()');
     dispatch(setSortOrder());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

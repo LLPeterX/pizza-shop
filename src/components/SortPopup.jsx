@@ -24,19 +24,16 @@ const SortPopup = React.memo(({ activeSortType, activeSortOrder, onClickSortType
   }
 
   const onSelectItem = (index) => {
-    //setActiveItem(index);
     onClickSortType(index);
     setVisiblePopup(false);
   }
 
   const onSelectOrder = () => {
-    console.log(' SortPopup: call onSelectOrder()');
     onClickSortOrder();
   }
 
-
   const activeLabel = items.find(e => e.type === activeSortType)?.name;
-  console.log('active sort order = ', activeSortOrder);
+
   return (
     <div className="sort" ref={sortRef}>
       <div className="sort__label">
@@ -82,7 +79,7 @@ SortPopup.propTypes = {
 };
 
 SortPopup.defaultProps = {
-  activeSortType: 'popular'
+  activeSortType: 'name'
 }
 
 export default SortPopup;

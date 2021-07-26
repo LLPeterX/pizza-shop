@@ -8,16 +8,7 @@ export const fetchPizzas = (category, sortBy, sortOrder = "desc") => (dispatch) 
     options += `category=${category}`;
     options += "&";
   }
-  if (sortBy === 'price') {
-    options += "_sort=price";
-  } else if (sortBy === 'rating') {
-    options += '_sort=rating';
-  } else if (sortBy === 'alphabet') {
-    options += "_sort=name"
-  }
-  options += `&_order=${sortOrder}`;
-
-  console.log('  call ', options);
+  options += `_sort=${sortBy}&_order=${sortOrder}`;
   axios.get(`http://localhost:5000/pizzas?${options}`)
     .then(({ data }) => {
       dispatch(setPizzas(data))

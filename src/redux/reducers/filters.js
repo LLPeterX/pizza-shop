@@ -1,6 +1,6 @@
 const initialState = {
   category: null,
-  sortBy: 'popular', // один из ['popupar','rating','alphabet','price']
+  sortBy: 'rating', // один из ['popupar','rating','alphabet','price']
   sortOrder: 'asc' // asc/desc - по возрастанию/убыванию
 }
 
