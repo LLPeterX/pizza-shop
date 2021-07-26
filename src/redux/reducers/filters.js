@@ -1,6 +1,7 @@
 const initialState = {
   category: null,
-  sortBy: 'popular' // один из ['popupar','rating','alphabet','price']
+  sortBy: 'popular', // один из ['popupar','rating','alphabet','price']
+  sortOrder: true // false - по убыванию, true - по возрастранию
 }
 
 const filters = (state = initialState, action) => {
@@ -8,7 +9,6 @@ const filters = (state = initialState, action) => {
     case 'SORT_BY':
       return { ...state, sortBy: action.payload };
     case 'SET_CATEGORY':
-      console.log('settinh cat ', action.payload);
       return { ...state, category: action.payload };
     default:
       return state;

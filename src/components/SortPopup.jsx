@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
+import PropTypes from 'prop-types';
 
-export default React.memo(function SortPopup({ items }) {
+const SortPopup = React.memo(({ activeSortType, onClickSortType, items }) => {
   // show/hide menu flag
   const [visiblePopup, setVisiblePopup] = useState(false);
-  // actve sort item (array of objects)
-  const [activeItem, setActiveItem] = useState(0);
   // sort order: false - ascending, true - descending
   const [sortOrder, setSortOrder] = useState(false);
 
@@ -22,6 +21,7 @@ export default React.memo(function SortPopup({ items }) {
     setSortOrder(!sortOrder);
   }
 
+  // скрыть sort popup при клике за пределами меню сортировки
   useEffect(() => {
     document.body.addEventListener('click', handleOutsideClick)
   }, [])
@@ -31,9 +31,12 @@ export default React.memo(function SortPopup({ items }) {
   }
 
   const onSelectItem = (index) => {
-    setActiveItem(index);
+    //setActiveItem(index);
+    onClickSortType(index);
     setVisiblePopup(false);
   }
+
+  const activeLabel = items.find(e => e.type === activeSortType)?.name;
 
   return (
     <div className="sort" ref={sortRef}>
@@ -53,7 +56,7 @@ export default React.memo(function SortPopup({ items }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={togglePopupVisible}>{items[activeItem].name}</span>
+        <span onClick={togglePopupVisible}>{activeLabel}</span>
       </div>
       {visiblePopup &&
         <div className="sort__popup">
@@ -62,8 +65,8 @@ export default React.memo(function SortPopup({ items }) {
               items && items.map((obj, index) =>
                 <li
                   key={obj.type}
-                  onClick={() => onSelectItem(index)}
-                  className={activeItem === index ? "active" : ""}
+                  onClick={() => onSelectItem(obj.type)}
+                  className={obj.type === activeSortType ? "active" : ""}
                 >{obj.name}</li>)
             }
           </ul>
@@ -72,3 +75,15 @@ export default React.memo(function SortPopup({ items }) {
     </div>
   )
 });
+
+SortPopup.propTypes = {
+  activeSortType: PropTypes.string.isRequired,
+  onClickSortType: PropTypes.func,
+  items: PropTypes.arrayOf(PropTypes.object)
+};
+
+SortPopup.defaultProps = {
+  activeSortType: 'popular'
+}
+
+export default SortPopup;
