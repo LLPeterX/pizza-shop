@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 
 const Categories = React.memo(({ activeCategory, items, onSelectCategory }) => {
-  //const [activeCategory, setActiveCategory] = useState(null);
 
   return (
     <div className="categories">

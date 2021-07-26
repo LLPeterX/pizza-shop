@@ -1,7 +1,7 @@
 const initialState = {
   category: null,
   sortBy: 'popular', // один из ['popupar','rating','alphabet','price']
-  sortOrder: true // false - по убыванию, true - по возрастранию
+  sortOrder: 'asc' // asc/desc - по возрастанию/убыванию
 }
 
 const filters = (state = initialState, action) => {
@@ -10,6 +10,8 @@ const filters = (state = initialState, action) => {
       return { ...state, sortBy: action.payload };
     case 'SET_CATEGORY':
       return { ...state, category: action.payload };
+    case 'SWITCH_SORT_ORDER':
+      return { ...state, sortOrder: state.sortOrder === 'asc' ? 'desc' : 'asc' };
     default:
       return state;
   }

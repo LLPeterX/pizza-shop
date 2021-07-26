@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Categories, SortPopup, PizzaBlock } from '../components'
-import { setCategory, setSortBy } from '../redux/actions/filters';
+import { setCategory, setSortBy, setSortOrder } from '../redux/actions/filters';
 import { fetchPizzas } from '../redux/actions/pizzas'
 import Loader from 'react-js-loader'
 
@@ -17,16 +17,16 @@ export default function Home() {
 
   const pizzas = useSelector(store => store.pizzas.items);
   const isLoaded = useSelector(store => store.pizzas.isLoaded);
-  const { category, sortBy } = useSelector(store => store.filters);
+  const { category, sortBy, sortOrder } = useSelector(store => store.filters);
 
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     //if (pizzas.length === 0) {
-    dispatch(fetchPizzas());
+    dispatch(fetchPizzas(category, sortBy, sortOrder));
     //}
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, sortBy]);
+  }, [category, sortBy, sortOrder]);
 
   const onSelectCategory = React.useCallback((cat) => {
     dispatch(setCategory(cat));
@@ -38,11 +38,24 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const onSelectSortOrder = React.useCallback(() => {
+    console.log(' Home: call onSelectSortOrder()');
+    dispatch(setSortOrder());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
   return (
     <div className="container">
       <div className="content__top">
         <Categories items={categoryNames} activeCategory={category} onSelectCategory={onSelectCategory} />
-        <SortPopup items={sortItems} activeSortType={sortBy} onClickSortType={onSelectSortType} />
+        <SortPopup
+          items={sortItems}
+          activeSortType={sortBy}
+          activeSortOrder={sortOrder}
+          onClickSortType={onSelectSortType}
+          onClickSortOrder={onSelectSortOrder}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">

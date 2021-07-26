@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types';
 
-const SortPopup = React.memo(({ activeSortType, onClickSortType, items }) => {
+const SortPopup = React.memo(({ activeSortType, activeSortOrder, onClickSortType, onClickSortOrder, items }) => {
   // show/hide menu flag
   const [visiblePopup, setVisiblePopup] = useState(false);
-  // sort order: false - ascending, true - descending
-  const [sortOrder, setSortOrder] = useState(false);
-
   // ссылка на div меню сортировки
   const sortRef = useRef();
 
@@ -15,10 +12,6 @@ const SortPopup = React.memo(({ activeSortType, onClickSortType, items }) => {
     if (!e.path.includes(sortRef.current)) {
       setVisiblePopup(false);
     }
-  }
-  // клик на кнопку смены порядка сортировки
-  const handleSortOrder = (e) => {
-    setSortOrder(!sortOrder);
   }
 
   // скрыть sort popup при клике за пределами меню сортировки
@@ -36,14 +29,20 @@ const SortPopup = React.memo(({ activeSortType, onClickSortType, items }) => {
     setVisiblePopup(false);
   }
 
-  const activeLabel = items.find(e => e.type === activeSortType)?.name;
+  const onSelectOrder = () => {
+    console.log(' SortPopup: call onSelectOrder()');
+    onClickSortOrder();
+  }
 
+
+  const activeLabel = items.find(e => e.type === activeSortType)?.name;
+  console.log('active sort order = ', activeSortOrder);
   return (
     <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
-          className={sortOrder ? "rotated" : ""}
-          onClick={handleSortOrder}
+          className={activeSortOrder === 'asc' ? "rotated" : ""}
+          onClick={onSelectOrder}
           width="10"
           height="6"
           viewBox="0 0 10 6"
