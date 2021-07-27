@@ -1,11 +1,14 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link, Route } from 'react-router-dom'
 import logo from '../assets/img/pizza-logo.svg'
 import Button from './Button';
-/* 
-функциональный компонент
-*/
+
 function Header() {
+
+  const { totalPrice, totalCount } = useSelector(store => store.cart);
+  console.log(`tp: ${totalPrice} tc=${totalCount}`);
+
   return (
     <div className="header">
       <div className="container">
@@ -22,7 +25,7 @@ function Header() {
           <Link to="/cart">
             <Button className="button--cart">
               {/* <a href="/cart.html" className="button button--cart"> */}
-              <span>570 ₽</span>
+              <span>{totalPrice} ₽</span>
               <div className="button__delimiter"></div>
               <svg
                 width="18"
@@ -53,7 +56,7 @@ function Header() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span>6</span>
+              <span>{totalCount}</span>
               {/* </a> */}
             </Button>
           </Link>
@@ -62,31 +65,5 @@ function Header() {
     </div>
   );
 }
-
-
-/* 
-// классовый компонент
-class Header extends React.Component {
-
-  render() {
-    return (
-
-      <div className="header">
-        <div className="container">
-          <Button outline>Кнопка</Button>
-          <div className="header__logo">
-            <img width="38" src={logo} alt="Pizza logo" />
-            <div>
-              <h1>Pizza Shop v.2</h1>
-              <p>самая вкусная пицца в Майкопе!</p>
-            </div>
-          </div>
-          <CartButton sum={560} count={4} outline />
-        </div>
-      </div>
-    );
-  }
-}
- */
 
 export default Header;
