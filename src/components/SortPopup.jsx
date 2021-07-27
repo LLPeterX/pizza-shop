@@ -1,22 +1,38 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types';
 
+// composedPath - polyfill для браузеров, которые не поддерживают event.path и composePath() - напр. IE 11
+function composedPath(el) {
+  const path = [];
+  while (el) {
+    path.push(el);
+    if (el.tagName === 'HTML') {
+      path.push(document);
+      path.push(window);
+      return path;
+    }
+    el = el.parentElement;
+  }
+}
+
 const SortPopup = React.memo(({ activeSortType, activeSortOrder, onClickSortType, onClickSortOrder, items }) => {
   // show/hide menu flag
   const [visiblePopup, setVisiblePopup] = useState(false);
   // ссылка на div меню сортировки
   const sortRef = useRef();
 
-  // обработчик клика на станице.
-  const handleOutsideClick = (e) => {
-    if (!e.path.includes(sortRef.current)) {
+  // обработчик клика на станице. Надо учесть, что event.path работает не на всех браузерах.
+  const handleOutsideClick = (event) => {
+    const path = event.path || (event.composedPath && event.composedPath()) || composedPath(event.target);
+    if (!path.includes(sortRef.current)) {
       setVisiblePopup(false);
     }
   }
 
   // скрыть sort popup при клике за пределами меню сортировки
   useEffect(() => {
-    document.body.addEventListener('click', handleOutsideClick)
+    document.body.addEventListener('click', handleOutsideClick);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const togglePopupVisible = () => {
