@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Categories, SortPopup, PizzaBlock } from '../components'
 import { setCategory, setSortBy, setSortOrder } from '../redux/actions/filters';
 import { fetchPizzas } from '../redux/actions/pizzas'
-//import { addPizzaToCart } from '../redux/actions/cart'
+import { addPizzaToCart } from '../redux/actions/cart'
 import Loader from 'react-js-loader'
 
 // внешняя константа вне Home(), чтобы ссылка на неё осталась при перерендере Home
@@ -44,10 +44,10 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const onAddPizza = React.useCallback((pizza) => {
-  //   dispatch(addPizzaToCart(pizza));
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
+  const onAddPizza = React.useCallback((pizza) => {
+    dispatch(addPizzaToCart(pizza));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
 
   return (
@@ -65,7 +65,7 @@ export default function Home() {
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {isLoaded
-          ? pizzas.map(pizza => <PizzaBlock onAddPizza={(obj) => console.log(obj)} key={pizza.id} {...pizza} />)
+          ? pizzas.map(pizza => <PizzaBlock onAddPizza={onAddPizza} key={pizza.id} {...pizza} />)
           : <Loader type="spinner-circle" color="#000000" bgColor="#FFFFFF" />
         }
       </div>
