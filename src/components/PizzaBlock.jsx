@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Button from './Button'
 
-function PizzaBlock({ imageUrl, name, types, sizes, price }) {
+function PizzaBlock({ id, imageUrl, name, types, sizes, price, onAddPizza }) {
 
   const testo = ['тонкое', 'традиционное'];
   const [currentType, setCurrentType] = React.useState(0); // index of array testo
@@ -48,7 +49,11 @@ function PizzaBlock({ imageUrl, name, types, sizes, price }) {
       </div>
       <div className="pizza-block__bottom">
         <div className="pizza-block__price">от {price} ₽</div>
-        <div className="button button--outline button--add">
+        <Button
+          onClick={() => onAddPizza({
+            id, name, imageUrl, type: testo[currentType], size: currentSize, price
+          })}
+          className="button--add" outline>
           <svg
             width="12"
             height="12"
@@ -63,7 +68,7 @@ function PizzaBlock({ imageUrl, name, types, sizes, price }) {
           </svg>
           <span>Добавить</span>
           <i>2</i>
-        </div>
+        </Button>
       </div>
     </div>
   )
@@ -75,6 +80,7 @@ PizzaBlock.propTypes = {
   types: PropTypes.arrayOf(PropTypes.number).isRequired,
   sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
   price: PropTypes.number,
+  onAddPizza: PropTypes.func,
 }
 
 PizzaBlock.defaultProps = {
