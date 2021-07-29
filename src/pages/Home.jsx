@@ -18,6 +18,7 @@ export default function Home() {
 
   const pizzas = useSelector(store => store.pizzas.items);
   const isLoaded = useSelector(store => store.pizzas.isLoaded);
+  const cartItems = useSelector(store => store.cart.items);
   const { category, sortBy, sortOrder } = useSelector(store => store.filters);
 
   const dispatch = useDispatch();
@@ -65,7 +66,11 @@ export default function Home() {
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
         {isLoaded
-          ? pizzas.map(pizza => <PizzaBlock onAddPizza={onAddPizza} key={pizza.id} {...pizza} />)
+          ? pizzas.map(pizza => <PizzaBlock
+            onAddPizza={onAddPizza}
+            key={pizza.id}
+            countInCart={cartItems[pizza.id] ? cartItems[pizza.id].length : 0}
+            {...pizza} />)
           : <Loader type="spinner-circle" color="#000000" bgColor="#FFFFFF" />
         }
       </div>

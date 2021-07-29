@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Button from './Button'
 
-function PizzaBlock({ id, imageUrl, name, types, sizes, price, onAddPizza }) {
+function PizzaBlock({ id, imageUrl, name, types, sizes, price, onAddPizza, countInCart }) {
 
   const testo = ['тонкое', 'традиционное'];
   // массив размеров пицц - sizes - передается извне, хотя лучше бы здесь
@@ -76,7 +76,7 @@ function PizzaBlock({ id, imageUrl, name, types, sizes, price, onAddPizza }) {
             />
           </svg>
           <span>Добавить</span>
-          <i>2</i>
+          <i>{countInCart}</i>
         </Button>
       </div>
     </div>
@@ -90,6 +90,7 @@ PizzaBlock.propTypes = {
   sizes: PropTypes.arrayOf(PropTypes.number).isRequired,
   price: PropTypes.number,
   onAddPizza: PropTypes.func,
+  countInCart: PropTypes.number
 }
 
 PizzaBlock.defaultProps = {
