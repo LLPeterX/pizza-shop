@@ -6,6 +6,7 @@ import Button from './Button'
 function PizzaBlock({ id, imageUrl, name, types, sizes, price, onAddPizza }) {
 
   const testo = ['тонкое', 'традиционное'];
+  // массив размеров пицц - sizes - передается извне, хотя лучше бы здесь
   const [currentType, setCurrentType] = React.useState(0); // index of array testo
   const [currentSize, setCurrentSize] = React.useState(0); // index of array sizes
 
@@ -24,7 +25,7 @@ function PizzaBlock({ id, imageUrl, name, types, sizes, price, onAddPizza }) {
       imageUrl,
       price,
       type: testo[currentType],
-      size: currentSize
+      size: sizes[currentSize]
     });
   }
 
@@ -42,7 +43,6 @@ function PizzaBlock({ id, imageUrl, name, types, sizes, price, onAddPizza }) {
         <ul>
           {types.map((type, index) => <li
             key={index}
-            // className={index === currentType ? "active" : "inactive"}
             className={classNames({
               'active': index === currentType, // класс 'active' будет применен только при заданном условии
               'inactive': index !== currentType
