@@ -25,7 +25,7 @@ const cart = (state = initalState, action) => {
       }
     case 'REMOVE_FROM_CART': // уменьшить количество пицц
       {
-        const { id, type, size, price } = action.payload;
+        const { id, type, size } = action.payload;
         const removeIndex = state.items[id].findIndex(item => item.type === type && item.size === size);
         if (removeIndex < 0) {
           return state;

@@ -43,12 +43,17 @@ export default function Cart() {
   }, []);
 
   // Очистка всей корзины
-  const handleClearCart = React.useCallback(() => {
+  const handleClearCart = () => {
     if (window.confirm("Очистить корзину?")) {
       dispatch(clearCart());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
+
+  const handleOrder = () => {
+    alert(`Вы сделали заказ на общую сумму ${totalPrice} руб.`);
+    dispatch(clearCart());
+  }
 
 
   return (
@@ -106,7 +111,7 @@ export default function Cart() {
                   {/* </a> */}
                 </div>
               </Link>
-              <div className="button pay-btn">
+              <div className="button pay-btn" onClick={handleOrder}>
                 <span>Оплатить сейчас</span>
               </div>
             </div>
