@@ -7,13 +7,14 @@ import { addPizzaToCart, removePizzaFromCart, deleteOrder, clearCart } from '../
 export default function Cart() {
 
   const { totalCount, totalPrice, items } = useSelector(store => store.cart);
-  // группировка списка по type и size
+  // группировка списка пицц в корзине по type и size
   const groupedItems = [];
   Object.values(items).flat().forEach(item => {
     let outObj = groupedItems.find(obj => obj.id === item.id && obj.type === item.type && obj.size === item.size);
     if (!outObj) {
       groupedItems.push({ ...item, count: 1, price: item.price });
     } else {
+      // outObj ссылается на объект в массиве
       outObj.count++;
       outObj.totalPrice += item.price;
     }
@@ -21,22 +22,29 @@ export default function Cart() {
   // обработчики
   const dispatch = useDispatch();
 
+  // увеличение количества пицц одного вида корзине
   const handleAddPizza = React.useCallback((pizza) => {
     dispatch(addPizzaToCart(pizza));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []
   );
 
+  // уменьшение количества пицц одного вида в корзине 
   const handleRemovePizza = React.useCallback((pizza) => {
     dispatch(removePizzaFromCart(pizza));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // обработчик кнопки "удалить всю строку"
   const handleDelete = React.useCallback((pizza) => {
     dispatch(deleteOrder(pizza));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Очистка всей корзины
   const handleClearCart = React.useCallback((pizza) => {
     dispatch(clearCart());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 

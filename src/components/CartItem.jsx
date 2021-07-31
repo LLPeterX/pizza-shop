@@ -1,7 +1,6 @@
 import React from 'react'
 
 export default function CartItem({ id, name, type, size, imageUrl, count, price, onAddPizza, onRemovePizza, onDelete }) {
-  // price - цена одной пиццы, totalPrice - цена пицц этого вида
   return (
     <div className="cart__item">
       <div className="cart__item-img">

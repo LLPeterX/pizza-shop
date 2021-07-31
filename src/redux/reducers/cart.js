@@ -4,13 +4,8 @@ const initalState = {
   totalCount: 0
 }
 
-
 const cart = (state = initalState, action) => {
   switch (action.type) {
-    case 'SET_TOTAL_PRICE':
-      return { ...state, totalPrice: action.payload };
-    case 'SET_TOTAL_COUNT':
-      return { ...state, totalCount: action.payload };
     case 'ADD_TO_CART':
       {
         const id = action.payload.id;
@@ -22,40 +17,34 @@ const cart = (state = initalState, action) => {
         const itemsValues = Object.values(newItems).flat(); // массив массивов объектов пицц
         const totalCount = itemsValues.length;
         const totalPrice = itemsValues.reduce((sum, item) => sum + item.price, 0);
-        return {
-          ...state,
-          items: newItems,
-          // totalCount: state.totalCount + 1,
-          // totalPrice: state.totalPrice + action.payload.price
-          totalCount, totalPrice
+        return { ...state, items: newItems, totalCount, totalPrice };
+      }
+    case 'REMOVE_FROM_CART': // уменьшить количество пицц
+      {
+        const { id, type, size, price } = action.payload;
+        const removeIndex = state.items[id].findIndex(item => item.type === type && item.size === size);
+        if (removeIndex < 0) {
+          return state;
         }
+        const newArray = [...state.items[id].slice(0, removeIndex), ...state.items[id].slice(removeIndex + 1)];
+        const newItems = { ...state.items, [id]: newArray };
+        return { ...state, items: newItems, totalCount: state.totalCount - 1, totalPrice: state.totalPrice - price };
       }
-    case 'REMOVE_FROM_CART': // decrease count of pizzas in cart
-      const { id, type, size, price } = action.payload;
-      const removeIndex = state.items[id].findIndex(item => item.type === type && item.size === size);
-      if (removeIndex < 0) {
-        return state;
-      }
-      const newArray = [...state.items[id].slice(0, removeIndex), ...state.items[id].slice(removeIndex + 1)];
-      const newItems = {
-        ...state.items,
-        [id]: newArray
-      };
-      return { ...state, items: newItems, totalCount: state.totalCount - 1, totalPrice: state.totalPrice - price };
-    case 'DELETE_ORDER': // delete a row from cart (same pizza with id, type, size)
+    case 'DELETE_ORDER': // удалить всю строку из  Корзины (пицца с id, type, size)
       {
         const { id, type, size } = action.payload;
         const newArray = state.items[id].filter(order => !(order.id === id && order.type === type && order.size === size))
         const newItems = { ...state.items, [id]: newArray };
+        // если массив полностью пустой, то удалить items.id
         if (newItems[id].length === 0) {
           delete newItems[id];
         }
-        // пересчитать totalCount
+        // пересчитать totalCount и totalPrice
         const totalCount = Object.values(newItems).flat().length;
         const totalPrice = Object.values(newItems).flat().reduce((sum, item) => sum + item.price, 0);
         return { ...state.items, items: newItems, totalCount, totalPrice };
       }
-    case 'CLEAR_CART':
+    case 'CLEAR_CART': // очистка корзины
       return { ...initalState };
     default:
       return state;
