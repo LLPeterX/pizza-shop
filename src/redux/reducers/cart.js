@@ -55,6 +55,8 @@ const cart = (state = initalState, action) => {
         const totalPrice = Object.values(newItems).flat().reduce((sum, item) => sum + item.price, 0);
         return { ...state.items, items: newItems, totalCount, totalPrice };
       }
+    case 'CLEAR_CART':
+      return { ...initalState };
     default:
       return state;
   }
