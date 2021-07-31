@@ -3,6 +3,9 @@ const initalState = {
   totalPrice: 0,
   totalCount: 0
 }
+// подсчет общего количества и суммы заказа
+const getTotalCount = (items) => Object.values(items).flat().length;
+const getTotalSum = (items) => Object.values(items).flat().reduce((sum, v) => sum + v.price, 0);
 
 const cart = (state = initalState, action) => {
   switch (action.type) {
@@ -14,10 +17,11 @@ const cart = (state = initalState, action) => {
           [id]: !state.items[id] ? [action.payload] : [...state.items[id], action.payload]
         };
         // вычисление общего количества и цены
-        const itemsValues = Object.values(newItems).flat(); // массив массивов объектов пицц
-        const totalCount = itemsValues.length;
-        const totalPrice = itemsValues.reduce((sum, item) => sum + item.price, 0);
-        return { ...state, items: newItems, totalCount, totalPrice };
+        // const itemsValues = Object.values(newItems).flat(); // массив массивов объектов пицц
+        // const totalCount = itemsValues.length;
+        // const totalPrice = itemsValues.reduce((sum, item) => sum + item.price, 0);
+        // return { ...state, items: newItems, totalCount, totalPrice };
+        return { ...state, items: newItems, totalCount: getTotalCount(newItems), totalPrice: getTotalSum(newItems) }
       }
     case 'REMOVE_FROM_CART': // уменьшить количество пицц
       {
@@ -28,7 +32,8 @@ const cart = (state = initalState, action) => {
         }
         const newArray = [...state.items[id].slice(0, removeIndex), ...state.items[id].slice(removeIndex + 1)];
         const newItems = { ...state.items, [id]: newArray };
-        return { ...state, items: newItems, totalCount: state.totalCount - 1, totalPrice: state.totalPrice - price };
+        //return { ...state, items: newItems, totalCount: state.totalCount - 1, totalPrice: state.totalPrice - price };
+        return { ...state, items: newItems, totalCount: getTotalCount(newItems), totalPrice: getTotalSum(newItems) }
       }
     case 'DELETE_ORDER': // удалить всю строку из  Корзины (пицца с id, type, size)
       {
@@ -40,9 +45,10 @@ const cart = (state = initalState, action) => {
           delete newItems[id];
         }
         // пересчитать totalCount и totalPrice
-        const totalCount = Object.values(newItems).flat().length;
-        const totalPrice = Object.values(newItems).flat().reduce((sum, item) => sum + item.price, 0);
-        return { ...state.items, items: newItems, totalCount, totalPrice };
+        // const totalCount = Object.values(newItems).flat().length;
+        // const totalPrice = Object.values(newItems).flat().reduce((sum, item) => sum + item.price, 0);
+        //return { ...state.items, items: newItems, totalCount, totalPrice };
+        return { ...state, items: newItems, totalCount: getTotalCount(newItems), totalPrice: getTotalSum(newItems) }
       }
     case 'CLEAR_CART': // очистка корзины
       return { ...initalState };
