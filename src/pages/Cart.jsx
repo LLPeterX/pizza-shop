@@ -42,8 +42,10 @@ export default function Cart() {
   }, []);
 
   // Очистка всей корзины
-  const handleClearCart = React.useCallback((pizza) => {
-    dispatch(clearCart());
+  const handleClearCart = React.useCallback(() => {
+    if (window.confirm("Очистить корзину?")) {
+      dispatch(clearCart());
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
